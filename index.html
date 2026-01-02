@@ -8,7 +8,10 @@
   <link rel="icon" href="CATTAlex pic2.png" type="image/png">
   <meta name="theme-color" content="#071022">
 
-  <!-- Firebase (compat libs for easier integration) -->
+  <!-- Elfsight platform script (required for Elfsight widgets) -->
+  <script src="https://elfsightcdn.com/platform.js" async></script>
+
+  <!-- Firebase compat libraries (needed by script.js) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -41,14 +44,16 @@
 
       <nav class="top-cta" aria-label="Primary">
         <div class="pages-dropdown" id="pagesDropdown">
-          <button class="pages-btn" id="pagesBtn" aria-haspopup="true" aria-expanded="false">Pages ▾</button>
+          <button class="pages-btn" id="pagesBtn" aria-haspopup="true" aria-expanded="false">
+            Pages ▾
+          </button>
           <ul class="pages-menu" id="pagesMenu" role="menu" aria-labelledby="pagesBtn">
             <li role="none"><a role="menuitem" href="index.html">Home</a></li>
+            <li role="none"><a role="menuitem" href="stream-guide.html">Stream guide</a></li>
             <li role="none"><a role="menuitem" href="info.html">Info</a></li>
-            <li role="none"><a role="menuitem" href="stream-guide.html">Streaming Guide</a></li>
             <li role="none"><a role="menuitem" href="pc-mods.html">PC Mods</a></li>
             <li role="none"><a role="menuitem" href="quest-native-mods.html">Quest Native Mods</a></li>
-            <li role="none"><a role="menuitem" href="secret.html">Secret</a></li>
+            <li role="none"><a role="menuitem" href="secret.html">SECRET</a></li>
             <li role="none"><a role="menuitem" href="profile.html">Profile</a></li>
           </ul>
         </div>
@@ -67,7 +72,7 @@
     <section class="panel panel--hero" id="home">
       <div class="panel-inner">
         <h2 class="hero-title">Welcome to my Beat Saber journey</h2>
-        <p class="hero-lead">Hi — I'm CATTAlex. I play, map, and mod Beat Saber. I record my runs and build content around rhythm gaming and neon visuals.</p>
+        <p class="hero-lead">Hi — I'm CATTAlex. I play Beat Saber. I record my plays and build content around rhythm gaming.</p>
         <div class="hero-ctas">
           <a class="btn btn--large btn--accent" href="https://beatsaber.com/" target="_blank" rel="noopener noreferrer">Get Beat Saber</a>
           <a class="btn btn--ghost" href="#about">Read My Setup</a>
@@ -84,9 +89,203 @@
       </div>
     </section>
 
-    <!-- (rest of content unchanged) -->
+    <!-- YouTube videos -->
+    <section class="panel panel--videos" id="videos">
+      <div class="panel-inner">
+        <h3>Cool Videos</h3>
+        <div class="video-grid">
+          <div class="video reveal">
+            <div class="video-iframe">
+              <iframe src="https://www.youtube.com/embed/Ef9Hf69xzTw" title="I made an unofficial OST 8 and Beat Saber teased it 2 weeks later..." frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-caption">I made an unofficial OST 8 and Beat Saber teased it 2 weeks later...</p>
+          </div>
+
+          <div class="video reveal">
+            <div class="video-iframe">
+              <iframe src="https://www.youtube.com/embed/8cdOgUo4mIw" title="Teminite x Boom Kitty - The Master II: Blades Of Chaos | Beat Saber OST 8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-caption">Teminite x Boom Kitty - The Master II: Blades Of Chaos</p>
+          </div>
+
+          <div class="video reveal">
+            <div class="video-iframe">
+              <iframe src="https://www.youtube.com/embed/B4H2w7buvIs" title="TSFAlex &amp; Cosmic149 custom music pack showcase!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-caption">TSFAlex &amp; Cosmic149 custom music pack showcase!</p>
+          </div>
+
+          <div class="video reveal">
+            <div class="video-iframe">
+              <iframe src="https://www.youtube.com/embed/qV8mL4Re4_8" title="Odo (e_ku bootleg) - Ado in Beat Saber!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-caption">Odo (e_ku bootleg) - Ado in Beat Saber!</p>
+          </div>
+
+          <div class="video reveal">
+            <div class="video-iframe">
+              <iframe src="https://www.youtube.com/embed/4yQvhW60wIE" title="Something Just Like This in Beat Saber Coldplay music pack!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-caption">Something Just Like This in Beat Saber</p>
+          </div>
+
+          <div class="video reveal">
+            <div class="video-iframe">
+              <iframe src="https://www.youtube.com/embed/mG5XMgIjIWQ" title="CATTAlex Best Maps Awards 2025" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-caption">CATTAlex Best Maps Awards 2025</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BeatSaver recommended maps (separate section) -->
+    <section class="panel panel--beatsaver" id="beatsaver">
+      <div class="panel-inner">
+        <h3>Recommended BeatSaver Maps — Try these</h3>
+        <div class="beatmap-grid">
+          <div class="beatmap reveal">
+            <iframe src="https://beatsaver.com/maps/4a8fe/embed" loading="lazy" title="Map 4a8fe"></iframe>
+          </div>
+          <div class="beatmap reveal">
+            <iframe src="https://beatsaver.com/maps/40f1f/embed" loading="lazy" title="Map 40f1f"></iframe>
+          </div>
+          <div class="beatmap reveal">
+            <iframe src="https://beatsaver.com/maps/43be0/embed" loading="lazy" title="Map 43be0"></iframe>
+          </div>
+          <div class="beatmap reveal">
+            <iframe src="https://beatsaver.com/maps/44080/embed" loading="lazy" title="Map 44080"></iframe>
+          </div>
+          <div class="beatmap reveal">
+            <iframe src="https://beatsaver.com/maps/495d3/embed" loading="lazy" title="Map 495d3"></iframe>
+          </div>
+          <div class="beatmap reveal">
+            <iframe src="https://beatsaver.com/maps/3b283/embed" loading="lazy" title="Map 3b283"></iframe>
+          </div>
+        </div>
+
+        <div class="beatleader-block reveal">
+          <h4>Follow my BeatLeader</h4>
+          <p>See my scores and progress on BeatLeader: <a href="https://beatleader.com/u/76561199847092427" target="_blank" rel="noopener noreferrer">beatleader.com/u/76561199847092427</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Downloads & Versions -->
+    <section class="panel panel--cards" id="downloads">
+      <div class="panel-inner">
+        <div class="card reveal">
+          <h4>Downloads</h4>
+          <ul>
+            <li>🟣 Playlists: <a href="https://beatsaver.com/profile/306187#playlists" target="_blank" rel="noopener noreferrer">https://beatsaver.com/profile/306187#playlists</a></li>
+            <li>🟢 Sabers: <a href="https://beatleader.com/supporting-project/link" target="_blank" rel="noopener noreferrer">beatleader.com/supporting-project/link</a></li>
+            <li>🔴 Beat Saber: <a href="https://beatsaber.com/" target="_blank" rel="noopener noreferrer">beatsaber.com</a></li>
+          </ul>
+        </div>
+
+        <div class="card reveal">
+          <h4>Version I use</h4>
+          <p>🆚 Version of BS I use: <strong>1.40.6</strong></p>
+        </div>
+
+        <div class="card reveal">
+          <h4>Mods I Use</h4>
+          <ul>
+            <li>Noodle Extensions</li>
+            <li>Chroma</li>
+            <li>Mapping Extensions</li>
+            <li>Camera2</li>
+            <li>CustomSabersLite</li>
+            <li>Vivify</li>
+            <li>ReeSabers</li>
+            <li>BeatLeader</li>
+            <li>Scoresaber</li>
+            <li>Beat Saber Plus</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gear & Specs -->
+    <section class="panel panel--specs" id="gear">
+      <div class="panel-inner reveal">
+        <h3>My VR Gear</h3>
+        <ul>
+          <li>🕶️ Headset: Meta Quest 3</li>
+          <li>🎮 Controllers: Meta Quest Touch Controllers</li>
+          <li>🧶 Link Cable: Kiwi Design Link Cable with 5Gbps Super Speed</li>
+        </ul>
+
+        <h3>PC Specs</h3>
+        <ul>
+          <li>▶ GPU: Nvidia GeForce RTX 4090 Laptop GPU</li>
+          <li>▶ CPU: AMD Ryzen 7 7000 Series</li>
+          <li>▶ RAM: 16GB DDR5</li>
+          <li>▶ Motherboard: An ASUS motherboard of some sort</li>
+          <li>▶ Storage: 1.5T of M.2 NVME SSD's</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Workflow -->
+    <section class="panel panel--workflow" id="workflow">
+      <div class="panel-inner reveal">
+        <h3>How I Make Content</h3>
+        <ul>
+          <li>🔴 I record using OBS Studio</li>
+          <li>🟣 I edit videos in Microsoft Clipchamp</li>
+          <li>🟡 Thumbnails are made in Canva</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- AI / Tools (BOTTOM) -->
+    <section class="panel panel--ai" id="ai">
+      <div class="panel-inner reveal">
+        <h3>AI, Websites & Tools</h3>
+        <p>I build websites, tools, and automations using AI to speed development and create polished interfaces. I create single-file demos, embed media, and wire up smooth interactions for content creators.</p>
+        <p>Check out my other projects and portfolio: <a href="https://tsfalex-central.vercel.app" target="_blank" rel="noopener noreferrer">tsfalex-central.vercel.app</a></p>
+      </div>
+    </section>
+
+    <!-- Socials -->
+    <section class="panel panel--socials" id="socials">
+      <div class="panel-inner reveal">
+        <h3>Check out my other socials</h3>
+        <ul class="social-list">
+          <li>🟣 Twitch: <a href="https://www.twitch.tv/tsf_alex" target="_blank" rel="noopener noreferrer">twitch.tv/tsf_alex</a></li>
+          <li>🟣 BeatLeader: <a href="https://beatleader.com/u/76561199847092427" target="_blank" rel="noopener noreferrer">beatleader.com/u/76561199847092427</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contact / Footer -->
+    <section class="panel panel--contact" id="contact">
+      <div class="panel-inner reveal">
+        <h3>Get In Touch</h3>
+        <p>If you want collabs, map features, or just to talk Beat Saber — reach out on Twitch or BeatLeader!</p>
+        <div class="footer-ctas">
+          <a class="btn btn--ghost" href="https://www.twitch.tv/tsf_alex" target="_blank" rel="noopener noreferrer">Twitch</a>
+          <a class="btn btn--glass" href="https://beatleader.com/u/76561199847092427" target="_blank" rel="noopener noreferrer">BeatLeader</a>
+        </div>
+
+        <footer class="site-footer">
+          <small>© <span id="year"></span> CATTAlex — Beat Saber Journey</small>
+        </footer>
+      </div>
+    </section>
   </main>
 
   <script src="script.js"></script>
+
+  <!-- Elfsight audio player (fixed bottom-right) -->
+  <div class="elfsight-fixed" aria-hidden="false">
+    <div class="elfsight-app-2f77b2a4-99ad-4c20-9221-0a7816862b1f" data-elfsight-app-lazy></div>
+  </div>
+
+  <!-- Elfsight AI chatbot (fixed bottom-left) -->
+  <div class="elfsight-chat" aria-hidden="false">
+    <div class="elfsight-app-1fe60767-5f40-45f7-8336-9e5bb12de07b" data-elfsight-app-lazy></div>
+  </div>
 </body>
 </html>
