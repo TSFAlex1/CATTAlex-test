@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CATTAlex</title>
+  <meta name="description" content="CATTAlex — Beat Saber gameplay, maps, sabers, and journey." />
+  <link rel="icon" href="CATTAlex pic2.png" type="image/png">
+  <meta name="theme-color" content="#071022">
+
+  <!-- Firebase (compat libs for easier integration) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Blurred background image (slow parallax) -->
+  <div class="bg-image" id="bgImage" aria-hidden="true"></div>
+
+  <div class="scene-bg">
+    <div class="bg-layer layer--1"></div>
+    <div class="bg-layer layer--2"></div>
+    <div class="bg-layer layer--3"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="avatar-wrap" aria-hidden="false">
+          <img src="CATTAlex pic.jpg" alt="CATTAlex profile" class="avatar" id="avatar">
+          <div class="neon-ring" aria-hidden="true"></div>
+        </div>
+        <div class="brand-text">
+          <h1 class="channel-title">CATTAlex</h1>
+          <p class="subtitle">Beat Saber • Maps • Sabers • Journey</p>
+        </div>
+      </div>
+
+      <nav class="top-cta" aria-label="Primary">
+        <div class="pages-dropdown" id="pagesDropdown">
+          <button class="pages-btn" id="pagesBtn" aria-haspopup="true" aria-expanded="false">Pages ▾</button>
+          <ul class="pages-menu" id="pagesMenu" role="menu" aria-labelledby="pagesBtn">
+            <li role="none"><a role="menuitem" href="index.html">Home</a></li>
+            <li role="none"><a role="menuitem" href="info.html">Info</a></li>
+            <li role="none"><a role="menuitem" href="stream-guide.html">Streaming Guide</a></li>
+            <li role="none"><a role="menuitem" href="pc-mods.html">PC Mods</a></li>
+            <li role="none"><a role="menuitem" href="quest-native-mods.html">Quest Native Mods</a></li>
+            <li role="none"><a role="menuitem" href="secret.html">Secret</a></li>
+            <li role="none"><a role="menuitem" href="profile.html">Profile</a></li>
+          </ul>
+        </div>
+
+        <a class="btn btn--glass" href="https://beatsaver.com/profile/306187" target="_blank" rel="noopener noreferrer">BeatSaver</a>
+        <a class="btn btn--accent" href="https://beatleader.com/supporting-project/link" target="_blank" rel="noopener noreferrer">Download Sabers</a>
+
+        <!-- Profile area (updated by script.js on auth change) -->
+        <div id="profileNav" style="margin-left:12px;"></div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page" id="page">
+    <!-- Hero section -->
+    <section class="panel panel--hero" id="home">
+      <div class="panel-inner">
+        <h2 class="hero-title">Welcome to my Beat Saber journey</h2>
+        <p class="hero-lead">Hi — I'm CATTAlex. I play, map, and mod Beat Saber. I record my runs and build content around rhythm gaming and neon visuals.</p>
+        <div class="hero-ctas">
+          <a class="btn btn--large btn--accent" href="https://beatsaber.com/" target="_blank" rel="noopener noreferrer">Get Beat Saber</a>
+          <a class="btn btn--ghost" href="#about">Read My Setup</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="panel panel--info" id="about">
+      <div class="panel-inner reveal">
+        <h3>About & Channel Info</h3>
+        <p>✦ I make Beat Saber content because I enjoy rhythm games, music, and creating cool gameplay videos. I upload consistently and aim to improve with every new video.</p>
+        <p>✦ I started this channel to share my gameplay, maps, and overall Beat Saber journey. I’ve been playing for a long time and plan to keep pushing myself to get better and post even more high-quality content over time.</p>
+      </div>
+    </section>
+
+    <!-- (rest of content unchanged) -->
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
