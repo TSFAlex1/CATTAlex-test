@@ -1,17 +1,26 @@
-/* ===== Helpers ===== */
-const $ = (sel, root = document) => root.querySelector(sel);
-const el = id => document.getElementById(id);
-const mk = (t, attrs = {}) => {
-  const e = document.createElement(t);
-  Object.entries(attrs).forEach(([k, v]) => {
-    if (k === 'text') e.textContent = v;
-    else if (k === 'html') e.innerHTML = v;
-    else e.setAttribute(k, v);
-  });
-  return e;
-};
+/* =========================
+   SAFE SITE SCRIPT (NAV ONLY)
+   ========================= */
 
-/* ===== Pages dropdown (FIXED) ===== */
+/* Firebase init (unchanged) */
+const firebaseConfig = {
+  apiKey: "AIzaSyBgAw8v4n_wOaqRGWSUVNPNlICauTviXgw",
+  authDomain: "cattalex-4b13a.firebaseapp.com",
+  projectId: "cattalex-4b13a",
+};
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+/* Helpers */
+const el = id => document.getElementById(id);
+const escapeHtml = s => s ? s.replace(/[&<>"']/g, m =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])) : '';
+
+/* =========================
+   PAGES DROPDOWN (FIXED)
+   ========================= */
 function wirePagesDropdown() {
   const btn = el('pagesBtn');
   const menu = el('pagesMenu');
@@ -20,7 +29,7 @@ function wirePagesDropdown() {
   btn.addEventListener('click', e => {
     e.stopPropagation();
     const open = menu.classList.toggle('show');
-    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-expanded', open);
   });
 
   document.addEventListener('click', e => {
@@ -31,88 +40,88 @@ function wirePagesDropdown() {
   });
 }
 
-/* ===== Profile navbar (SAFE render) ===== */
-function renderProfileNav(userDoc, firebaseUser) {
+/* =========================
+   PROFILE NAV RENDER
+   ========================= */
+function renderProfileNav(userDoc, user) {
   const nav = el('profileNav');
   if (!nav) return;
 
-  // signed out
-  if (!firebaseUser) {
-    if (nav.dataset.state === 'signed-out') return;
-    nav.dataset.state = 'signed-out';
-    nav.innerHTML = `<a class="btn btn--ghost" href="profile.html">Profile</a>`;
+  /* LOGGED OUT */
+  if (!user) {
+    nav.innerHTML = `
+      <button id="loginGoogle" class="btn btn--ghost">
+        Log in / Sign up
+      </button>
+    `;
+
+    el('loginGoogle').onclick = async () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      await auth.signInWithPopup(provider);
+    };
     return;
   }
 
-  // signed in
-  if (nav.dataset.state === 'signed-in') return;
-  nav.dataset.state = 'signed-in';
-
-  const name =
+  /* LOGGED IN */
+  const username =
     (userDoc && userDoc.username) ||
-    firebaseUser.displayName ||
-    firebaseUser.email ||
-    'Account';
+    user.displayName ||
+    user.email;
+
+  const avatar = escapeHtml(username[0].toUpperCase());
 
   nav.innerHTML = `
-    <div class="profile-menu" style="position:relative;">
-      <button id="profileBtnMenu" class="btn btn--ghost" aria-expanded="false">
-        ${name} ▾
+    <div class="profile-menu" style="position:relative">
+      <button id="profileBtn" class="btn btn--ghost" aria-expanded="false">
+        <span class="avatar">${avatar}</span>
+        ${escapeHtml(username)} ▾
       </button>
-      <div id="profileDropdown" hidden>
-        <a class="btn btn--glass" href="profile.html">Account</a>
-        <button id="navLogout" class="btn btn--ghost">Log out</button>
+      <div id="profileMenu" class="profile-dropdown">
+        <a href="profile.html">Account settings</a>
+        <button id="genToken">User token</button>
+        <button id="logout">Log out</button>
       </div>
     </div>
   `;
 
-  const btn = el('profileBtnMenu');
-  const menu = el('profileDropdown');
+  const btn = el('profileBtn');
+  const menu = el('profileMenu');
 
-  btn.addEventListener('click', e => {
+  btn.onclick = e => {
     e.stopPropagation();
-    const open = !menu.hasAttribute('hidden');
-    menu.toggleAttribute('hidden', open);
-    btn.setAttribute('aria-expanded', String(!open));
-  });
+    menu.classList.toggle('open');
+  };
 
-  document.addEventListener('click', e => {
-    if (!menu.contains(e.target) && !btn.contains(e.target)) {
-      menu.setAttribute('hidden', '');
-      btn.setAttribute('aria-expanded', 'false');
-    }
-  });
+  document.addEventListener('click', () => menu.classList.remove('open'));
 
-  el('navLogout')?.addEventListener('click', async () => {
-    await firebase.auth().signOut();
-    location.reload();
-  });
+  el('logout').onclick = () => auth.signOut();
+
+  el('genToken').onclick = async () => {
+    alert(
+      'WARNING:\n\nThis token identifies your account.\nDo NOT share it publicly.'
+    );
+  };
 }
 
-/* ===== Firebase ===== */
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-/* ===== Auth state ===== */
-let unsub = null;
-auth.onAuthStateChanged(user => {
+/* =========================
+   AUTH STATE
+   ========================= */
+auth.onAuthStateChanged(async user => {
   if (!user) {
-    if (unsub) unsub();
     renderProfileNav(null, null);
     return;
   }
 
   const ref = db.collection('users').doc(user.uid);
-  unsub = ref.onSnapshot(snap => {
-    renderProfileNav(snap.exists ? snap.data() : null, user);
-  });
+  const snap = await ref.get();
+  renderProfileNav(snap.exists ? snap.data() : null, user);
 });
 
-/* ===== DOM ready ===== */
+/* =========================
+   DOM READY
+   ========================= */
 document.addEventListener('DOMContentLoaded', () => {
   wirePagesDropdown();
-
-  // footer year
   const y = el('year');
   if (y) y.textContent = new Date().getFullYear();
 });
