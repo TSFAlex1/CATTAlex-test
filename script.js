@@ -1,127 +1,117 @@
 /* =========================
-   SAFE SITE SCRIPT (NAV ONLY)
+   Firebase init
    ========================= */
-
-/* Firebase init (unchanged) */
 const firebaseConfig = {
   apiKey: "AIzaSyBgAw8v4n_wOaqRGWSUVNPNlICauTviXgw",
   authDomain: "cattalex-4b13a.firebaseapp.com",
   projectId: "cattalex-4b13a",
 };
-if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-/* Helpers */
-const el = id => document.getElementById(id);
-const escapeHtml = s => s ? s.replace(/[&<>"']/g, m =>
-  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])) : '';
+/* =========================
+   Pages dropdown (WORKS WITH YOUR HTML)
+   ========================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('pagesBtn');
+  const menu = document.getElementById('pagesMenu');
+
+  if (btn && menu) {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = menu.classList.toggle('show');
+      btn.setAttribute('aria-expanded', open);
+    });
+
+    document.addEventListener('click', e => {
+      if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('show');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+});
 
 /* =========================
-   PAGES DROPDOWN (FIXED)
+   Profile nav render (ONLY #profileNav)
    ========================= */
-function wirePagesDropdown() {
-  const btn = el('pagesBtn');
-  const menu = el('pagesMenu');
-  if (!btn || !menu) return;
-
-  btn.addEventListener('click', e => {
-    e.stopPropagation();
-    const open = menu.classList.toggle('show');
-    btn.setAttribute('aria-expanded', open);
-  });
-
-  document.addEventListener('click', e => {
-    if (!menu.contains(e.target) && !btn.contains(e.target)) {
-      menu.classList.remove('show');
-      btn.setAttribute('aria-expanded', 'false');
-    }
-  });
-}
-
-/* =========================
-   PROFILE NAV RENDER
-   ========================= */
-function renderProfileNav(userDoc, user) {
-  const nav = el('profileNav');
+function renderProfileNav(user) {
+  const nav = document.getElementById('profileNav');
   if (!nav) return;
 
   /* LOGGED OUT */
   if (!user) {
     nav.innerHTML = `
-      <button id="loginGoogle" class="btn btn--ghost">
+      <button id="loginBtn" class="btn btn--ghost">
         Log in / Sign up
       </button>
     `;
 
-    el('loginGoogle').onclick = async () => {
+    document.getElementById('loginBtn').onclick = async () => {
       const provider = new firebase.auth.GoogleAuthProvider();
       await auth.signInWithPopup(provider);
     };
+
     return;
   }
 
   /* LOGGED IN */
-  const username =
-    (userDoc && userDoc.username) ||
-    user.displayName ||
-    user.email;
-
-  const avatar = escapeHtml(username[0].toUpperCase());
+  const name = user.displayName || user.email || 'User';
+  const avatarLetter = name[0].toUpperCase();
 
   nav.innerHTML = `
-    <div class="profile-menu" style="position:relative">
-      <button id="profileBtn" class="btn btn--ghost" aria-expanded="false">
-        <span class="avatar">${avatar}</span>
-        ${escapeHtml(username)} ▾
+    <div class="account">
+      <button class="account-btn" id="accountBtn">
+        <span class="avatar">${avatarLetter}</span>
+        <span class="account-name">${name}</span>
+        ▾
       </button>
-      <div id="profileMenu" class="profile-dropdown">
+
+      <div class="account-dropdown" id="accountDropdown">
         <a href="profile.html">Account settings</a>
-        <button id="genToken">User token</button>
-        <button id="logout">Log out</button>
+        <button id="tokenBtn">User token</button>
+        <button id="logoutBtn">Log out</button>
       </div>
     </div>
   `;
 
-  const btn = el('profileBtn');
-  const menu = el('profileMenu');
+  const account = nav.querySelector('.account');
+  const btn = document.getElementById('accountBtn');
 
-  btn.onclick = e => {
+  btn.addEventListener('click', e => {
     e.stopPropagation();
-    menu.classList.toggle('open');
-  };
+    account.classList.toggle('open');
+  });
 
-  document.addEventListener('click', () => menu.classList.remove('open'));
+  document.addEventListener('click', () => {
+    account.classList.remove('open');
+  });
 
-  el('logout').onclick = () => auth.signOut();
+  document.getElementById('logoutBtn').onclick = () => auth.signOut();
 
-  el('genToken').onclick = async () => {
+  document.getElementById('tokenBtn').onclick = () => {
     alert(
-      'WARNING:\n\nThis token identifies your account.\nDo NOT share it publicly.'
+      'WARNING:\n\nThis user token identifies your account.\nDo NOT share it with anyone.'
     );
   };
 }
 
 /* =========================
-   AUTH STATE
+   Auth state
    ========================= */
-auth.onAuthStateChanged(async user => {
-  if (!user) {
-    renderProfileNav(null, null);
-    return;
-  }
-
-  const ref = db.collection('users').doc(user.uid);
-  const snap = await ref.get();
-  renderProfileNav(snap.exists ? snap.data() : null, user);
+auth.onAuthStateChanged(user => {
+  renderProfileNav(user);
 });
 
 /* =========================
-   DOM READY
+   Footer year
    ========================= */
 document.addEventListener('DOMContentLoaded', () => {
-  wirePagesDropdown();
-  const y = el('year');
+  const y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 });
