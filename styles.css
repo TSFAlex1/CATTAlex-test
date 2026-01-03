@@ -82,6 +82,8 @@ body{
 .pages-menu li{margin:0}
 .pages-menu a{display:block;padding:8px 12px;color:#e9f1ff;text-decoration:none;border-radius:8px;font-weight:600}
 .pages-menu a:hover{background:rgba(255,255,255,0.02)}
+.pages-menu { display: none; }
+.pages-menu.show { display: block; }
 
 /* Page and panels */
 .page{scroll-snap-type:y mandatory}
